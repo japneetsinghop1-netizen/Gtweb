@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gt web - Premium Core Engine</title>
+    <style>
+        /* Modern Industrial Clean Reset & Palette */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-color: #020408; /* Secure Fallback Background Color */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #f1f5f9;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        /* Branding Matrix with Smooth Floating */
+        .header-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            margin: 0 auto;
+            animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .logo {
+            width: 95px;
+            height: 95px;
+            border-radius: 24px;
+            object-fit: cover;
+            border: 2px solid rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 35px rgba(6, 182, 212, 0.2);
+            animation: floatLogo 6s ease-in-out infinite alternate;
+        }
+
+        .web-name {
+            font-size: 40px;
+            font-weight: 900;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ffffff, #3b82f6, #06b6d4, #ffffff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmerText 4s linear infinite;
+        }
+
+        @keyframes floatLogo {
+            0% { transform: translateY(0) scale(1); box-shadow: 0 0 30px rgba(37, 99, 235, 0.2); }
+            100% { transform: translateY(-12px) scale(1.02); box-shadow: 0 0 50px rgba(6, 182, 212, 0.55); }
+        }
+
+        @keyframes shimmerText {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ☰ Professional Navigation Controls */
+        .nav-toggle {
+            position: fixed;
+            top: 25px;
+            right: 30px;
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 100;
+            display: none;
+            color: #06b6d4;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(16px);
+            padding: 12px 18px;
+            border-radius: 16px;
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .nav-toggle:hover { 
+            background: #2563eb; 
+            color: #fff;
+            box-shadow: 0 0 30px rgba(37, 99, 235, 0.6);
+            transform: translateY(-2px) scale(1.05);
+        }
+
+        /* Modern Slide-out Panel Infrastructure */
+        .account-drawer {
+            position: fixed;
+            top: 0;
+            right: -360px;
+            width: 360px;
+            height: 100%;
+            background: rgba(6, 10, 20, 0.98);
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
+            box-shadow: -25px 0 65px rgba(0, 0, 0, 0.85);
+            z-index: 99;
+            transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 35px 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            border-left: 1px solid rgba(6, 182, 212, 0.2);
+            overflow-y: auto;
+        }
+        .account-drawer.active { right: 0; }
+        .account-drawer h3 { font-size: 19px; color: #06b6d4; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 10px; font-weight: 700; margin-top: 10px; }
+        .profile-data { background: rgba(30, 41, 59, 0.3); padding: 16px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.05); }
+        .profile-data label { font-size: 11px; color: #94a3b8; text-transform: uppercase; display: block; margin-bottom: 6px; }
+        .profile-data span { font-size: 14px; color: #f8fafc; font-weight: 600; word-break: break-all; }
+
+        .drawer-links-box { display: flex; flex-direction: column; gap: 12px; }
+        .drawer-url-btn {
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            padding: 15px; border-radius: 14px; font-weight: 700; font-size: 14px; color: #fff;
+            text-decoration: none; border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .btn-nodes-panel { background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2); }
+        .btn-nodes-web { background: linear-gradient(135deg, #1e293b 0%, #475569 100%); box-shadow: 0 4px 15px rgba(71, 85, 105, 0.2); }
+        .btn-code-hub { background: linear-gradient(135deg, #047857 0%, #059669 100%); box-shadow: 0 4px 15px rgba(5, 150, 105, 0.2); }
+        .drawer-url-btn:hover { transform: translateY(-3px); filter: brightness(1.2); box-shadow: 0 8px 25px rgba(6, 182, 212, 0.3); }
+
+        /* Sleek High-Performance View Panels */
+        .view-panel {
+            background: rgba(13, 20, 38, 0.75);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            padding: 45px;
+            border-radius: 32px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
+            width: 100%;
+            max-width: 460px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+            margin-top: 150px;
+            animation: scaleUpIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .dashboard-wide, .details-wide { max-width: 980px; }
+
+        @keyframes scaleUpIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        h2 { font-size: 28px; margin-bottom: 28px; font-weight: 800; letter-spacing: 0.5px; }
+        
+        /* Form Inputs Matrix Configuration */
+        .input-group { margin-bottom: 22px; text-align: left; }
+        .input-group label { display: block; margin-bottom: 8px; font-size: 12px; color: #94a3b8; text-transform: uppercase; }
+        .input-group input, .input-group textarea {
+            width: 100%; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px; background: rgba(6, 10, 20, 0.55); color: #fff; outline: none; font-size: 15px; transition: all 0.3s;
+        }
+        .input-group input:focus, .input-group textarea:focus { border-color: #06b6d4; box-shadow: 0 0 20px rgba(6, 182, 212, 0.25); background: rgba(6, 10, 20, 0.8); }
+
+        .alert-bar { font-size: 13px; margin-bottom: 20px; display: none; padding: 14px; border-radius: 14px; text-align: left; animation: scaleUpIn 0.3s ease; }
+        .alert-error { background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); }
+        .alert-success { background: rgba(34, 197, 94, 0.12); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.2); }
+
+        /* Premium Buttons Array */
+        .btn {
+            width: 100%; padding: 16px; border: none; border-radius: 14px;
+            background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%); color: #fff;
+            font-size: 16px; cursor: pointer; font-weight: 700; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 5px 20px rgba(37, 99, 235, 0.3);
+        }
+        .btn:hover { 
+            transform: translateY(-4px) scale(1.01); 
+            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.5), 0 0 15px rgba(37, 99, 235, 0.4);
+            filter: brightness(1.15);
+        }
+
+        .alternate-switch { margin-top: 25px; font-size: 14px; color: #94a3b8; }
+        .alternate-switch a { color: #06b6d4; text-decoration: none; font-weight: 600; transition: color 0.2s; }
+        .alternate-switch a:hover { color: #fff; text-decoration: underline; }
+
+        /* Services Hub Matrix Layout Grid */
+        .services-layout-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 22px;
+            margin-top: 30px;
+        }
+
+        /* ── HIGH-TECH CYBER ROUND CHASE ANIMATION MATRIX ── */
+        .service-action-card {
+            position: relative;
+            background: rgba(10, 17, 32, 0.9);
+            padding: 26px;
+            border-radius: 20px;
+            color: #ffffff;
+            cursor: pointer;
+            text-align: left;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        /* Continuous High-Definition Border Tracker */
+        .service-action-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent 30%, #06b6d4, #2563eb, #3b82f6, transparent 70%);
+            animation: runRoundOutline 4s linear infinite;
+            z-index: -2;
+        }
+
+        /* Solid Mask For Restricted Seamless 3px Outline Thickness */
+        .service-action-card::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background: #0b1220;
+            border-radius: 17px;
+            z-index: -1;
+            transition: background 0.3s ease;
+        }
+
+        @keyframes runRoundOutline {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Interactive Hover Enhancements */
+        .service-action-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 45px rgba(6, 182, 212, 0.35), 0 0 30px rgba(37, 99, 235, 0.25);
+        }
+        
+        .service-action-card:hover::after {
+            background: #111a2e;
+        }
+
+        .service-action-card b { font-size: 19px; color: #06b6d4; display: flex; align-items: center; gap: 8px; font-weight: 700; position: relative; }
+        .service-action-card span { font-size: 14px; color: #94a3b8; line-height: 1.5; position: relative; }
+
+        /* Assignee Security Panel Styling */
+        .assignee-box {
+            background: rgba(6, 182, 212, 0.06);
+            border: 1px dashed rgba(6, 182, 212, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .assignee-box h4 {
+            color: #06b6d4;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .assignee-box p {
+            font-size: 15px;
+            color: #e2e8f0;
+        }
+        .assignee-box .badge {
+            background: linear-gradient(90deg, #ef4444, #f43f5e);
+            color: #fff;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin-left: 6px;
+            display: inline-block;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(244, 63, 94, 0.4);
+        }
+
+        .links-flex-box { display: flex; flex-direction: column; gap: 14px; margin-top: 25px; width: 100%; }
+        .anchor-action-button {
+            display: flex; align-items: center; justify-content: center; padding: 16px;
+            border-radius: 14px; text-decoration: none; font-weight: 700; font-size: 15px; color: #fff;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .anchor-action-button:hover { 
+            transform: translateY(-4px) scale(1.01);
+        }
+        .whatsapp-theme { 
+            background: linear-gradient(135deg, #15803d 0%, #16a34a 100%); 
+            box-shadow: 0 6px 20px rgba(22, 163, 74, 0.3); 
+        }
+        .whatsapp-theme:hover {
+            box-shadow: 0 12px 30px rgba(22, 163, 74, 0.5), 0 0 15px rgba(22, 163, 74, 0.3);
+        }
+        .discord-theme { 
+            background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%); 
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.3); 
+        }
+        .discord-theme:hover {
+            box-shadow: 0 12px 30px rgba(79, 70, 229, 0.5), 0 0 15px rgba(79, 70, 229, 0.3);
+        }
+
+        .hidden { display: none !important; }
+
+        @media (max-width: 600px) {
+            .services-layout-grid { grid-template-columns: 1fr; }
+            .view-panel { padding: 25px; margin-top: 130px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="nav-toggle" id="menuBtn" onclick="toggleAccountPanel()">☰</div>
+
+    <div class="account-drawer" id="sideDrawer">
+        <h3>Security Profile</h3>
+        <div class="profile-data">
+            <label>Registered Identity</label>
+            <span id="accountEmailField">No Session Active</span>
+        </div>
+        <div class="profile-data">
+            <label>Master Password</label>
+            <span id="accountPasswordField">No Session Active</span>
+        </div>
+
+        <h3>System Control Links</h3>
+        <div class="drawer-links-box">
+            <a href="https://node.gtnodesop.qzz.io" target="_blank" class="drawer-url-btn btn-nodes-panel" onclick="playPremiumClickSound()">GT Nodes Panel</a>
+            <a href="https://gtnodes.netlify.app" target="_blank" class="drawer-url-btn btn-nodes-web" onclick="playPremiumClickSound()">GT Nodes Website</a>
+            <a href="https://earnest-cocada-67da2a.netlify.app/" target="_blank" class="drawer-url-btn btn-code-hub" onclick="playPremiumClickSound()">GT Code Hub</a>
+        </div>
+
+        <button class="btn" onclick="terminateSession()" style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); margin-top: auto; box-shadow: none;">Terminate Session (Logout)</button>
+    </div>
+
+    <div class="header-brand">
+        <img src="logo.jpg" alt="Gt web" class="logo">
+        <div class="web-name">Gt web</div>
+    </div>
+
+    <div class="view-panel" id="loginView">
+        <h2>System Sign-In</h2>
+        <div class="alert-bar alert-error" id="loginAlertBox">Invalid credentials supplied. Access denied.</div>
+        <form onsubmit="executeLoginAction(event)">
+            <div class="input-group">
+                <label>Email ID / Username</label>
+                <input type="email" id="formLoginEmail" placeholder="name@domain.com" required>
+            </div>
+            <div class="input-group">
+                <label>Password Structure</label>
+                <input type="password" id="formLoginPassword" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn">Authorize Entrance</button>
+        </form>
+        <p class="alternate-switch">Need a node profile? <a href="#" onclick="switchView('signupView')">Create Account</a></p>
+    </div>
+
+    <div class="view-panel hidden" id="signupView">
+        <h2>Establish Account Node</h2>
+        <div class="alert-bar alert-success" id="signupAlertBox">Node account structured successfully! Routing to sign-in...</div>
+        <form onsubmit="executeSignupAction(event)">
+            <div class="input-group">
+                <label>Legal Profile Name</label>
+                <input type="text" placeholder="John Doe" required>
+            </div>
+            <div class="input-group">
+                <label>Secure Email Route</label>
+                <input type="email" id="formSignupEmail" placeholder="name@domain.com" required>
+            </div>
+            <div class="input-group">
+                <label>Construct Master Password</label>
+                <input type="password" id="formSignupPassword" placeholder="Minimum 6 characters" minlength="6" required>
+            </div>
+            <button type="submit" class="btn">Generate Security Profile</button>
+        </form>
+        <p class="alternate-switch">Existing node registered? <a href="#" onclick="switchView('loginView')">Sign In</a></p>
+    </div>
+
+    <div class="view-panel dashboard-wide hidden" id="dashboardView">
+        <h2 style="font-size: 28px; text-shadow: 0 0 15px rgba(6,182,212,0.3);">Core Infrastructure Hub</h2>
+        <p style="color: #94a3b8; font-size: 15px;">Welcome back. Select any operational node panel module grid below to link straight into system processes.</p>
+        
+        <div class="services-layout-grid">
+            <div class="service-action-card" onclick="routeToSubPage('video')">
+                <b>🎬 Video Editing Matrix</b>
+                <span>Cinematic deployment modules, pacing configurations, and custom asset transitions.</span>
+            </div>
+            <div class="service-action-card" onclick="routeToSubPage('web')">
+                <b>🌐 Web Engineering Core</b>
+                <span>Full-stack rendering structures utilizing automated speed optimization code matrices.</span>
+            </div>
+            <div class="service-action-card" onclick="routeToSubPage('game')">
+                <b>🎮 Interactive Game Engine</b>
+                <span>Algorithmic mathematical 2D/3D environment architecture and state machines.</span>
+            </div>
+            <div class="service-action-card" onclick="routeToSubPage('discord_bot')">
+                <b>🤖 Bot Automations Engine</b>
+                <span>Multi-threaded system operation scripts configured for advanced telemetry control.</span>
+            </div>
+            <div class="service-action-card" onclick="routeToSubPage('discord_server')">
+                <b>💬 Server Mapping Layouts</b>
+                <span>Structural permissions arrays, clean channels architecture blueprints (Free & Premium tiers).</span>
+            </div>
+            <div class="service-action-card" onclick="routeToSubPage('hosting')">
+                <b>☁️ Network Nodes Cloud</b>
+                <span>Enterprise high-performance virtual partitions backed with physical firewall nodes protection.</span>
+            </div>
+            <div class="service-action-card" onclick="routeToSubPage('minecraft')">
+                <b>⛏️ Minecraft Host Deployments</b>
+                <span>Lag-free high performance processing allocation frameworks optimized for heavy clusters.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="view-panel details-wide hidden" id="subPageView">
+        <h2 id="targetPageTitle" style="color: #06b6d4; font-size: 28px;">Operational Node Description</h2>
+        <p id="targetPageDescription" style="line-height: 1.7; margin: 25px 0; color: #cbd5e1; text-align: left; font-size: 15.5px;"></p>
+        
+        <div class="assignee-box" id="assigneeSecuritySection">
+            <h4>🛡️ Assigned Infrastructure Engineers</h4>
+            <p id="targetPageAssignee"></p>
+        </div>
+
+        <div class="links-flex-box">
+            <a href="https://whatsapp.com/channel/0029VbCIx2xCBtxM3QE4O50U" target="_blank" class="anchor-action-button whatsapp-theme" onclick="playPremiumClickSound()">Follow Gt web Node Channel on WhatsApp</a>
+            <a href="https://discord.gg/BKVKu2ZvsK" target="_blank" class="anchor-action-button discord-theme" onclick="playPremiumClickSound()">Establish Interaction inside Discord Server</a>
+        </div>
+        
+        <button class="btn" onclick="switchView('dashboardView')" style="margin-top: 30px; background: rgba(255,255,255,0.06); color: #fff; box-shadow: none; border: 1px solid rgba(255,255,255,0.08);">← Return to Main Dashboard</button>
+    </div>
+
+    <script>
+        // High-Tier Tactical Sound Synthesizer Engine (satisfying cyber click curve)
+        function playPremiumClickSound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Double Sine-Wave Trigger Loop for Advanced Tactical Feedback
+                const oscPrimary = audioCtx.createOscillator();
+                const oscSecondary = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                oscPrimary.type = 'sine';
+                oscPrimary.frequency.setValueAtTime(1200, audioCtx.currentTime);
+                oscPrimary.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.04);
+                
+                oscSecondary.type = 'sine';
+                oscSecondary.frequency.setValueAtTime(600, audioCtx.currentTime);
+                oscSecondary.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.04);
+
+                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.04);
+                
+                oscPrimary.connect(gainNode);
+                oscSecondary.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                oscPrimary.start();
+                oscSecondary.start();
+                oscPrimary.stop(audioCtx.currentTime + 0.04);
+                oscSecondary.stop(audioCtx.currentTime + 0.04);
+            } catch (error) {
+                console.log("Audio pipeline standard security bypass.");
+            }
+        }
+
+        // Configuration Services Database Mapping
+        const documentationMatrix = {
+            video: "Access top-tier mechanical cinematic asset formatting, tracking algorithms integration, custom color matrix operations, and pristine auditory engineering structures built directly for content production workflows.",
+            web: "Execute high-speed deployment paradigms for virtual web applications. From building low-latency reactive state interfaces down to configuring custom database communication engines using clean semantic standards.",
+            game: "Transform complex geometric engine designs into active logical environments. We build low-overhead 2D & 3D software rendering loops tailored precisely around your engine specifications.",
+            discord_bot: "Automate and script high-volume notification loops throughout your online hubs. We code specialized bot applications featuring heavy telemetry parsing, advanced multi-channel permission filters.",
+            discord_server: "Acquire perfectly streamlined aesthetic discord community architectures designed precisely for competitive software gaming systems. We map clear administrative chains, automated protection arrays.",
+            hosting: "Deploy container files, static pages architectures, or processing applications across secure non-shared computing slots. Enjoy 99.9% physical uptime guarantees combined with heavy firewall protections.",
+            minecraft: "Instantly instantiate dedicated server nodes optimized for heavy real-time tracking loops. Run intensive custom modpacks or scalable enterprise performance configurations with absolute ease."
+        };
+
+        // Services Assignment Database mapping updated strictly to OWNER status
+        const assigneeMatrix = {
+            video: "Managed by <strong>pratikgamer112</strong> <span class='badge'>Owner</span> & <strong>DarkJapneet</strong> <span class='badge'>Owner</span>. Protected with end-to-end encrypted rendering tunnels.",
+            web: "Managed by <strong>DarkJapneet</strong> <span class='badge'>Owner</span> & <strong>pratikgamer112</strong> <span class='badge'>Owner</span>. Deployed over secure SSL handshake protocols.",
+            game: "Managed by <strong>pratikgamer112</strong> <span class='badge'>Owner</span> & <strong>DarkJapneet</strong> <span class='badge'>Owner</span>. Guarded via anti-tamper runtime algorithms.",
+            discord_bot: "Managed by <strong>DarkJapneet</strong> <span class='badge'>Owner</span> & <strong>pratikgamer112</strong> <span class='badge'>Owner</span>. Monitored through highly protected token rotation matrices.",
+            discord_server: "Managed by <strong>pratikgamer112</strong> <span class='badge'>Owner</span> & <strong>DarkJapneet</strong> <span class='badge'>Owner</span>. Structured with advanced role hierarchy firewalls.",
+            hosting: "Managed by <strong>DarkJapneet</strong> <span class='badge'>Owner</span> & <strong>pratikgamer112</strong> <span class='badge'>Owner</span>. Powered by full military-grade DDoS protection algorithms.",
+            minecraft: "Managed by <strong>pratikgamer112</strong> <span class='badge'>Owner</span> & <strong>DarkJapneet</strong> <span class='badge'>Owner</span>. Protected with automated real-time hardware isolate nodes."
+        };
+
+        // Strict Account Persistence Verification Layer
+        function verifyOperationalSession() {
+            const systemState = localStorage.getItem('nodeSessionActive');
+            if (systemState === 'true') {
+                document.getElementById('menuBtn').style.display = 'block';
+                document.getElementById('accountEmailField').innerText = localStorage.getItem('nodeUserIdentity');
+                document.getElementById('accountPasswordField').innerText = localStorage.getItem('nodeUserToken');
+                switchView('dashboardView');
+            } else {
+                document.getElementById('menuBtn').style.display = 'none';
+                switchView('loginView');
+            }
+        }
+
+        function switchView(targetPanelId) {
+            playPremiumClickSound();
+            
+            const sessionActive = localStorage.getItem('nodeSessionActive');
+            if (sessionActive === 'true' && (targetPanelId === 'loginView' || targetPanelId === 'signupView')) {
+                targetPanelId = 'dashboardView';
+            }
+
+            const interfaces = ['loginView', 'signupView', 'dashboardView', 'subPageView'];
+            interfaces.forEach(panel => document.getElementById(panel).classList.add('hidden'));
+            
+            document.getElementById(targetPanelId).classList.remove('hidden');
+            document.getElementById('loginAlertBox').style.display = 'none';
+            document.getElementById('signupAlertBox').style.display = 'none';
+        }
+
+        function executeSignupAction(e) {
+            e.preventDefault();
+            playPremiumClickSound();
+            localStorage.setItem('nodeUserIdentity', document.getElementById('formSignupEmail').value);
+            localStorage.setItem('nodeUserToken', document.getElementById('formSignupPassword').value);
+            document.getElementById('signupAlertBox').style.display = 'block';
+            setTimeout(() => { switchView('loginView'); }, 1200);
+        }
+
+        function executeLoginAction(e) {
+            e.preventDefault();
+            playPremiumClickSound();
+            const activeToken = localStorage.getItem('nodeUserToken');
+            const activeIdentity = localStorage.getItem('nodeUserIdentity');
+            if (document.getElementById('formLoginEmail').value === activeIdentity && document.getElementById('formLoginPassword').value === activeToken && activeIdentity !== null) {
+                localStorage.setItem('nodeSessionActive', 'true');
+                verifyOperationalSession();
+            } else {
+                document.getElementById('loginAlertBox').style.display = 'block';
+            }
+        }
+
+        function terminateSession() {
+            playPremiumClickSound();
+            localStorage.setItem('nodeSessionActive', 'false');
+            toggleAccountPanel();
+            document.getElementById('menuBtn').style.display = 'none';
+            switchView('loginView');
+            location.reload();
+        }
+
+        function routeToSubPage(operationalKey) {
+            playPremiumClickSound();
+            const mappingHeaderLabels = {
+                video: "🎬 Video Editing Architecture Node", web: "🌐 Full-Stack Systems Core Studio",
+                game: "🎮 Game Logic & Environment Design Matrix", discord_bot: "🤖 Advanced Discord Bot Module",
+                discord_server: "💬 Structural Discord Layout Blueprint", hosting: "☁️ Scalable Enterprise Cloud Nodes Platform",
+                minecraft: "⛏️ High-Performance Allocated Minecraft Cluster"
+            };
+            document.getElementById('targetPageTitle').innerText = mappingHeaderLabels[operationalKey];
+            document.getElementById('targetPageDescription').innerText = documentationMatrix[operationalKey];
+            document.getElementById('targetPageAssignee').innerHTML = assigneeMatrix[operationalKey];
+            switchView('subPageView');
+        }
+
+        function toggleAccountPanel() {
+            playPremiumClickSound();
+            document.getElementById('sideDrawer').classList.toggle('active');
+        }
+
+        window.onload = verifyOperationalSession;
+    </script>
+</body>
+</html>

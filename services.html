@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - GT nodes web</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('background.jpg') no-repeat center center/cover;
+            min-height: 100vh;
+            color: #fff;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 14px;
+            border: 2px solid #fff;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 32px;
+            background: linear-gradient(90deg, #fff, #007bff, #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: moveGlow 4s linear infinite;
+        }
+
+        @keyframes moveGlow {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* Dashboard Workspace Arrangement */
+        .workspace {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        /* Services Buttons Column */
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .service-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .service-btn:hover, .service-btn.active {
+            background: linear-gradient(90deg, #007bff, #00c6ff);
+            border-color: transparent;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        /* Dynamic Info Box Column */
+        .details-panel {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: panelFade 0.4s ease-out;
+        }
+
+        @keyframes panelFade {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .details-panel h2 {
+            font-size: 26px;
+            margin-bottom: 15px;
+            color: #00c6ff;
+        }
+
+        .details-panel p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #e0e0e0;
+            margin-bottom: 30px;
+        }
+
+        /* Community Links Styling */
+        .links-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .action-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 15px;
+            transition: transform 0.2s;
+        }
+
+        .action-link:hover {
+            transform: translateY(-2px);
+        }
+
+        .whatsapp-btn { background: #25D366; color: #fff; }
+        .discord-btn { background: #5865F2; color: #fff; }
+
+        .back-home {
+            margin-top: 30px;
+            color: #aaa;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-home:hover { color: #fff; text-decoration: underline; }
+
+        @media (max-width: 800px) {
+            .workspace { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="logo.jpg" alt="Logo" class="logo">
+        <h1>GT nodes web Services</h1>
+    </div>
+
+    <div class="workspace">
+        <div class="services-list">
+            <button class="service-btn active" onclick="showDetails('video')">🎬 Video Editing Hub</button>
+            <button class="service-btn" onclick="showDetails('web')">🌐 Web Development</button>
+            <button class="service-btn" onclick="showDetails('game')">🎮 Game Design Studio</button>
+            <button class="service-btn" onclick="showDetails('discord_bot')">🤖 Custom Discord Bots</button>
+            <button class="service-btn" onclick="showDetails('discord_server')">💬 Server Setup (Free/Paid)</button>
+            <button class="service-btn" onclick="showDetails('hosting')">☁️ Cloud & Application Hosting</button>
+            <button class="service-btn" onclick="showDetails('minecraft')">⛏️ Minecraft Server Deployment</button>
+        </div>
+
+        <div class="details-panel" id="panelContent">
+            <h2>Video Editing Hub</h2>
+            <p>Get elite, professional cinematic cuts, custom visual transitions, color grading, and perfect sound design for YouTube, reels, or business promos. For inquiries, secure payments, order details, or generic free queries regarding modifications, proceed to contact us below.</p>
+            
+            <div class="links-wrapper">
+                <a href="https://whatsapp.com/channel/0029VbCIx2xCBtxM3QE4O50U" target="_blank" class="action-link whatsapp-btn">Follow GTweb Channel on WhatsApp</a>
+                <a href="https://discord.gg/BKVKu2ZvsK" target="_blank" class="action-link discord-btn">Join Official Support Discord Server</a>
+            </div>
+        </div>
+    </div>
+
+    <a href="index.html" class="back-home">← Back to Dashboard Overview</a>
+
+    <script>
+        // Database for dynamic text rendering
+        const serviceData = {
+            video: {
+                title: "Video Editing Hub",
+                desc: "Get elite, professional cinematic cuts, custom visual transitions, color grading, and perfect sound design for YouTube, reels, or business promos. For inquiries, secure payments, order details, or generic free queries regarding modifications, proceed to contact us below."
+            },
+            web: {
+                title: "Web Development",
+                desc: "Build highly lightning-fast and responsive web structures. From frontend architectures to full single-page portfolios utilizing clean HTML, CSS, and interactive JavaScript engines built precisely to fit your custom technical design rules."
+            },
+            game: {
+                title: "Game Design Studio",
+                desc: "Bring your dream game ideas to reality! We offer specialized 2D & 3D game creation pipelines. You can also build interactive structural games straight inside our dashboard platforms or play native lightweight strategy mini-games built directly into the site framework."
+            },
+            discord_bot: {
+                title: "Custom Discord Bots",
+                desc: "Optimize and automate your entire community interactions. We code tailored multi-purpose discord automation bots specializing in advanced moderation layers, customized music stream processing, virtual leveling economies, or interactive API hooks."
+            },
+            discord_server: {
+                title: "Discord Server Setup",
+                desc: "Get an outstanding aesthetic Discord layout customized expertly for gaming, professional business workflows, or content creators. We build optimized role hierarchies, aesthetic custom embedded text alerts, and secure anti-raid logic in both absolute Free & premium Premium configurations."
+            },
+            hosting: {
+                title: "Cloud & Application Hosting",
+                desc: "Deploy files, platforms, or storage containers via our highly secure and unthrottled enterprise architecture nodes. Experience 99.9% hardware up-time guarantees accompanied by layered advanced DDoS shielding firewalls protecting your deployments."
+            },
+            minecraft: {
+                title: "Minecraft Server Deployment",
+                desc: "Instantly launch reliable high-performance Minecraft worlds. Run large customized heavy-modded modpacks or high-traffic custom Paper/Spigot multiplayer nodes easily. Available immediately across fully free dynamic testing slots as well as heavy premium commercial tiers."
+            }
+        };
+
+        function showDetails(key) {
+            // Update Active Buttons
+            const buttons = document.querySelectorAll('.service-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            // Render Panel with Smooth Fade Animation
+            const panel = document.getElementById('panelContent');
+            panel.style.animation = 'none';
+            panel.offsetHeight; // Trigger reflow
+            panel.style.animation = 'panelFade 0.4s ease-out';
+
+            panel.innerHTML = `
+                <h2>${serviceData[key].title}</h2>
+                <p>${serviceData[key].desc}</p>
+                <div class="links-wrapper">
+                    <a href="https://whatsapp.com/channel/0029VbCIx2xCBtxM3QE4O50U" target="_blank" class="action-link whatsapp-btn">Follow GTweb Channel on WhatsApp</a>
+                    <a href="https://discord.gg/BKVKu2ZvsK" target="_blank" class="action-link discord-btn">Join Official Support Discord Server</a>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
